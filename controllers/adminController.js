@@ -1,5 +1,7 @@
 const Category = require("../models/Category");
 const Bank = require("../models/Bank");
+const fs = require("fs-extra");
+const path = require("path");
 
 module.exports = {
   viewDashboard: (req, res) => {
@@ -105,18 +107,31 @@ module.exports = {
   },
 
   editBank: async (req, res) => {
+    const { id, nameBank, nomorRekening, name } = req.body;
     try {
-      const { id, nameBank, nomorRekening, name } = req.body;
       const bank = await Bank.findOne({ _id: id });
-      bank.nameBank = nameBank;
-      bank.nomorRekening = nomorRekening;
-      bank.name = name;
-      await bank.save();
-      req.flash("alertMessage", "Success Update Bank");
-      req.flash("alertStatus", "success");
-      res.redirect("/admin/bank");
+      if (req.file == undefined) {
+        bank.nameBank = nameBank;
+        bank.nomorRekening = nomorRekening;
+        bank.name = name;
+        await bank.save();
+        req.flash("alertMessage", "Success Update Bank");
+        req.flash("alertStatus", "success");
+        res.redirect("/admin/bank");
+      } else {
+        await fs.unlink(path.join(`public/${bank.imageUrl}`));
+        bank.nameBank = nameBank;
+        bank.nomorRekening = nomorRekening;
+        bank.name = name;
+        bank.imageUrl = `images/${req.file.filename}`;
+        await bank.save();
+        req.flash("alertMessage", "Success Update Bank");
+        req.flash("alertStatus", "success");
+        res.redirect("/admin/bank");
+      }
     } catch (error) {
-      req.flash("alertMessage", `$error.message`);
+      console.log(error);
+      req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       res.redirect("/admin/bank");
     }
@@ -126,12 +141,13 @@ module.exports = {
     try {
       const { id } = req.params;
       const bank = await Bank.findOne({ _id: id });
+      await fs.unlink(path.join(`public/${bank.imageUrl}`));
       await bank.remove();
       req.flash("alertMessage", "Success Delete Bank");
       req.flash("alertStatus", "success");
       res.redirect("/admin/bank");
     } catch (error) {
-      req.flash("alertMessage", `$error.message`);
+      req.flash("alertMessage", `${error.message}`);
       req.flash("alertStatus", "danger");
       res.redirect("/admin/bank");
     }

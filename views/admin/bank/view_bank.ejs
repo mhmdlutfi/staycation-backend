@@ -80,15 +80,15 @@
 <%- include('../../partials/js.ejs') %>
 
 <script>
-  $("dataTable").on("click", ".button-update-bank", function () {
+  $("#dataTable").on("click", ".button-update", function () {
     let id = $(this).data("id");
-    let nameBank = $(this).data("nameBank");
-    let nomorRekening = $(this).data("nomorRekening");
     let name = $(this).data("name");
+    let nameBank = $(this).data('namebank');
+    let nomorRekening = $(this).data('nomorrekening')
     $("#edit-modal").modal("show");
     $(".id").val(id);
-    $(".nameBank").val(nameBank);
-    $(".nomorRekening").val(nomorRekening);
     $(".name").val(name);
+    $('.nameBank').val(nameBank);
+    $('.nomorRekening').val(nomorRekening);
   });
 </script>
