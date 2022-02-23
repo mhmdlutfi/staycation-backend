@@ -1,17 +1,22 @@
 const mongoose = require("mongoose");
+const { ObjectId } = mongoose.Schema;
 
 const featureSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   qty: {
     type: Number,
-    required: true
+    required: true,
   },
   imageUrl: {
     type: String,
-    required: true
+    required: true,
+  },
+  ItemId: {
+    type: ObjectId,
+    ref: "Item",
   },
 });
 
