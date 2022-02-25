@@ -36,15 +36,14 @@
                   action="/admin/item/<%= item[i].id %>?_method=DELETE"
                   method="POST"
                 >
-                  <a href="/admin/item/show-image/<%= item[i].id %>" class="btn btn-info btn-circle btn-sm"
+                  <a
+                    href="/admin/item/show-image/<%= item[i].id %>"
+                    class="btn btn-info btn-circle btn-sm"
                     ><i class="fas fa-image"></i
                   ></a>
                   <a
-                    href="javascript:void()"
-                    type="button"
-                    class="btn btn-warning btn-circle btn-sm button-update"
-                    data-id="<%= item[i].id %>"
-                    data-name="<%= item[i].name %>"
+                    href="/admin/item/<%= item[i].id %>"
+                    class="btn btn-warning btn-circle btn-sm"
                     ><i class="fas fa-edit"></i
                   ></a>
                   <button
