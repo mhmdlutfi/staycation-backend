@@ -29,9 +29,9 @@ module.exports = {
           },
         });
 
-      const traveler = await Traveler.find();
-      const treasure = await Treasure.find();
-      const city = await Item.find();
+      const travelers = await Traveler.find();
+      const treasures = await Treasure.find();
+      const cities = await Item.find();
 
       for (let i = 0; i < category.length; i++) {
         for (let j = 0; j < category[i].itemId.length; j++) {
@@ -58,9 +58,9 @@ module.exports = {
 
       res.status(200).json({
         hero: {
-          traveler: traveler.length,
-          treasure: treasure.length,
-          city: city.length,
+          travelers: travelers.length,
+          treasures: treasures.length,
+          cities: cities.length,
         },
         mostPicked,
         category,
