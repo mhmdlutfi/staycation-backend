@@ -59,17 +59,23 @@ module.exports = {
 
   actionLogout: (req, res) => {
     req.session.destroy();
-    res.redirect('/admin/signin');
+    res.redirect("/admin/signin");
   },
 
-  viewDashboard: (req, res) => {
+  viewDashboard: async (req, res) => {
     try {
+      const member = await Member.find();
+      const booking = await Booking.find();
+      const item = await Item.find();
       res.render("admin/dashboard/view_dashboard", {
         title: "Staycation | Dashboard",
         user: req.session.user,
+        member,
+        booking,
+        item,
       });
     } catch (error) {
-
+      res.redirect("/admin/dashboard");
     }
   },
 
@@ -595,17 +601,16 @@ module.exports = {
   viewBooking: async (req, res) => {
     try {
       const booking = await Booking.find()
-        .populate('memberId')
-        .populate('bankId');
+        .populate("memberId")
+        .populate("bankId");
 
       res.render("admin/booking/view_booking", {
         title: "Staycation | Booking",
         user: req.session.user,
         booking,
       });
-
     } catch (error) {
-      res.redirect('/admin/booking')
+      res.redirect("/admin/booking");
     }
   },
 
@@ -616,25 +621,23 @@ module.exports = {
       const alertStatus = req.flash("alertStatus");
       const alert = { message: alertMessage, status: alertStatus };
       const booking = await Booking.findOne({ _id: id })
-        .populate('memberId')
-        .populate('bankId');
+        .populate("memberId")
+        .populate("bankId");
 
-      res.render('admin/booking/show_detail_booking', {
+      res.render("admin/booking/show_detail_booking", {
         title: "Staycation | Detail Booking",
         user: req.session.user,
         booking,
-        alert
+        alert,
       });
-    } catch (error) {
-
-    }
+    } catch (error) {}
   },
 
   actionConfirmation: async (req, res) => {
     const { id } = req.params;
     try {
       const booking = await Booking.findOne({ _id: id });
-      booking.payments.status = 'Accept';
+      booking.payments.status = "Accept";
       await booking.save();
       req.flash("alertMessage", "Success Confirmation Payment");
       req.flash("alertStatus", "success");
@@ -648,7 +651,7 @@ module.exports = {
     const { id } = req.params;
     try {
       const booking = await Booking.findOne({ _id: id });
-      booking.payments.status = 'Reject';
+      booking.payments.status = "Reject";
       await booking.save();
       req.flash("alertMessage", "Success Reject Payment");
       req.flash("alertStatus", "success");
