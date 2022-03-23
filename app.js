@@ -9,7 +9,7 @@ const flash = require("connect-flash");
 
 // import mongoose
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost:27017/db_bwamern", {
+mongoose.connect("mongodb+srv://herisetiawan8:kecoaterbang8@cluster0.tkc9o.mongodb.net/db_staycation?retryWrites=true&w=majority", {
   useNewUrlParser: true,
 });
 
