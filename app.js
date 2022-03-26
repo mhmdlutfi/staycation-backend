@@ -8,13 +8,16 @@ const session = require("express-session");
 const flash = require("connect-flash");
 
 // CORS
-const cors = require('cors');
+const cors = require("cors");
 
 // import mongoose
 const mongoose = require("mongoose");
-mongoose.connect("mongodb+srv://herisetiawan8:kecoaterbang8@cluster0.tkc9o.mongodb.net/db_staycation?retryWrites=true&w=majority", {
-  useNewUrlParser: true,
-});
+mongoose.connect(
+  "mongodb+srv://herisetiawan8:kecoaterbang8@cluster0.tkc9o.mongodb.net/db_staycation?retryWrites=true&w=majority",
+  {
+    useNewUrlParser: true,
+  }
+);
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -40,10 +43,11 @@ app.use(
 app.use(flash());
 
 // app.use(cors());
-app.use((req,res, next)=>{
-  res.setHeader('Access-Control-Allow-Origin',"http://localhost:3000");
-  res.setHeader('Access-Control-Allow-Headers',"*");
-  res.header('Access-Control-Allow-Credentials', true);
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS,DELETE,PUT");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.header("Access-Control-Allow-Credentials", true);
   next();
 });
 
