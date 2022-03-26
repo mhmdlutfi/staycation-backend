@@ -45,7 +45,7 @@ app.use(flash());
 // app.use(cors());
 app.use(
   cors({
-    origin: "http://localhost:3000/",
+    origin: "*",
     methods: ["GET", "POST", "DELETE", "UPDATE", "PUT", "PATCH"],
   })
 );
