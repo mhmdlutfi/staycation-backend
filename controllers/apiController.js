@@ -6,8 +6,8 @@ const Booking = require("../models/Booking");
 const Bank = require("../models/Bank");
 const Member = require("../models/Member");
 
-module.exports = {
-  landingPage: async (req, res) => {
+ module.exports = {
+    landingPage: async (req, res) => {
     try {
       const mostPicked = await Item.find()
         .select("_id title country city price unit imageId")
